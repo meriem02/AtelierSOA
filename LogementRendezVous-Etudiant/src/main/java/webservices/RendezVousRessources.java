@@ -11,7 +11,7 @@ import java.util.List;
 @Path("/rendezvous")
 public class RendezVousRessources {
 
-    RendezVousBusiness rendezVousBusiness = new RendezVousBusiness();
+     static RendezVousBusiness rendezVousBusiness = new RendezVousBusiness();
 
     // GET - récupérer tous les rendez-vous
     @GET
@@ -77,7 +77,6 @@ public class RendezVousRessources {
         }
     }
 
-    // POST - ajouter un nouveau rendez-vous
     @POST
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -100,7 +99,7 @@ public class RendezVousRessources {
             } else {
                 return Response.status(409)
                         .header("Access-Control-Allow-Origin", "*")
-                        .entity("{\"error\": \"Erreur lors de l'ajout du rendez-vous, logement peut-être inexistant\"}")
+                        .entity("{\"error\": \"Erreur lors de l'ajout du rendez-vous\"}")
                         .build();
             }
         } catch (Exception e) {
@@ -111,7 +110,6 @@ public class RendezVousRessources {
         }
     }
 
-    // PUT - modifier un rendez-vous existant
     @PUT
     @Path("/update/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -121,30 +119,30 @@ public class RendezVousRessources {
             if (updatedRendezVous == null) {
                 return Response.status(400)
                         .header("Access-Control-Allow-Origin", "*")
-                        .entity("Données du rendez-vous invalides")
+                        .entity("{\"error\": \"Données du rendez-vous invalides\"}")
                         .build();
             }
+
             boolean updated = rendezVousBusiness.updateRendezVous(id, updatedRendezVous);
             if (updated) {
                 return Response.status(200)
                         .header("Access-Control-Allow-Origin", "*")
-                        .entity("Rendez-vous mis à jour avec succès")
+                        .entity("{\"message\": \"Rendez-vous mis à jour avec succès\"}")
                         .build();
             } else {
                 return Response.status(404)
                         .header("Access-Control-Allow-Origin", "*")
-                        .entity("Rendez-vous avec id " + id + " non trouvé ou logement invalide")
+                        .entity("{\"error\": \"Rendez-vous non trouvé\"}")
                         .build();
             }
         } catch (Exception e) {
             return Response.status(500)
                     .header("Access-Control-Allow-Origin", "*")
-                    .entity("Erreur lors de la mise à jour du rendez-vous")
+                    .entity("{\"error\": \"Erreur lors de la mise à jour\"}")
                     .build();
         }
     }
 
-    // DELETE - supprimer un rendez-vous
     @DELETE
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -154,18 +152,18 @@ public class RendezVousRessources {
             if (deleted) {
                 return Response.status(200)
                         .header("Access-Control-Allow-Origin", "*")
-                        .entity("Rendez-vous supprimé avec succès")
+                        .entity("{\"message\": \"Rendez-vous supprimé avec succès\"}")
                         .build();
             } else {
                 return Response.status(404)
                         .header("Access-Control-Allow-Origin", "*")
-                        .entity("Rendez-vous avec id " + id + " non trouvé")
+                        .entity("{\"error\": \"Rendez-vous non trouvé\"}")
                         .build();
             }
         } catch (Exception e) {
             return Response.status(500)
                     .header("Access-Control-Allow-Origin", "*")
-                    .entity("Erreur lors de la suppression du rendez-vous")
+                    .entity("{\"error\": \"Erreur lors de la suppression\"}")
                     .build();
         }
     }

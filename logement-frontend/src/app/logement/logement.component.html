@@ -1,0 +1,88 @@
+<h2 class="title">Liste des Logements</h2>
+<div class="search-bar">
+    <label for="searchRef">Recherche par Référence :</label>
+    <input type="number" id="searchRef" [(ngModel)]="referenceRecherche" name="referenceRecherche" />
+
+    <label for="searchDelegation">Recherche par Délégation :</label>
+    <input type="text" id="searchDelegation" [(ngModel)]="delegationRecherche" name="delegationRecherche" />
+
+    <button class="btn btn-search" (click)="rechercher()">Rechercher</button>
+    <button class="btn btn-clear" (click)="clearSearch()">Réinitialiser</button>
+</div>
+
+
+
+<!-- Bouton Ajouter au-dessus de la table -->
+<div class="table-header">
+    <button class="btn btn-add" (click)="startAdd()">Ajouter un logement</button>
+</div>
+
+<div class="table-container" *ngIf="logements.length > 0; else noData">
+    <table class="logement-table">
+        <thead>
+            <tr>
+                <th>Référence</th>
+                <th>Adresse</th>
+                <th>Délégation</th>
+                <th>Gouvernorat</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Prix</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let logement of logements" tabindex="0">
+                <td>{{ logement.reference }}</td>
+                <td>{{ logement.adresse }}</td>
+                <td>{{ logement.delegation }}</td>
+                <td>{{ logement.gouvernorat }}</td>
+                <td>{{ logement.type }}</td>
+                <td>{{ logement.description }}</td>
+                <td>{{ logement.prix }} DT</td>
+                <td>
+                    <button class="btn btn-edit" (click)="editLogement(logement)">Edit</button>
+                    <button class="btn btn-delete" (click)="deleteLogement(logement.reference)">Supprimer</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #noData>
+    <p>Aucun logement disponible.</p>
+</ng-template>
+
+<!-- Modal d’édition -->
+<div class="modal" [class.show]="selectedLogement" *ngIf="selectedLogement">
+    <div class="modal-content">
+        <span class="close" (click)="cancelEdit()">&times;</span>
+        <h3>Modifier Logement Réf: {{ selectedLogement.reference }}</h3>
+
+        <form (ngSubmit)="saveLogement()" #editForm="ngForm" novalidate>
+
+            <label for="adresse">Adresse:</label>
+            <input id="adresse" [(ngModel)]="selectedLogement.adresse" name="adresse" required />
+
+            <label for="delegation">Délégation:</label>
+            <input id="delegation" [(ngModel)]="selectedLogement.delegation" name="delegation" required />
+
+            <label for="gouvernorat">Gouvernorat:</label>
+            <input id="gouvernorat" [(ngModel)]="selectedLogement.gouvernorat" name="gouvernorat" required />
+
+            <label for="type">Type:</label>
+            <input id="type" [(ngModel)]="selectedLogement.type" name="type" required />
+
+            <label for="description">Description:</label>
+            <input id="description" [(ngModel)]="selectedLogement.description" name="description" required />
+
+            <label for="prix">Prix (DT):</label>
+            <input id="prix" type="number" [(ngModel)]="selectedLogement.prix" name="prix" required min="0" />
+
+            <div class="modal-actions">
+                <button type="submit" [disabled]="editForm.invalid" class="btn btn-edit">Enregistrer</button>
+                <button type="button" class="btn btn-delete" (click)="cancelEdit()">Annuler</button>
+            </div>
+        </form>
+    </div>
+</div>

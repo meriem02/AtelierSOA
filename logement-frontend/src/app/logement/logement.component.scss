@@ -1,0 +1,229 @@
+/* Général */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9fafb;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+/* Erreur */
+.error {
+    background-color: #fdecea;
+    color: #b71c1c;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+/* Bouton Ajouter */
+.table-header {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn {
+    padding: 8px 16px;
+    margin-left: 8px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+}
+
+.btn-add {
+    background-color: #28a745;
+    color: white;
+    box-shadow: 0 4px 8px rgb(40 167 69 / 0.4);
+}
+
+.btn-add:hover {
+    background-color: #218838;
+    box-shadow: 0 6px 12px rgb(33 136 56 / 0.6);
+}
+
+/* Boutons Edit/Delete */
+.btn-edit {
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 3px 6px rgb(0 123 255 / 0.4);
+}
+
+.btn-edit:hover {
+    background-color: #0056b3;
+    box-shadow: 0 5px 10px rgb(0 86 179 / 0.6);
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+    box-shadow: 0 3px 6px rgb(220 53 69 / 0.4);
+}
+
+.btn-delete:hover {
+    background-color: #a71d2a;
+    box-shadow: 0 5px 10px rgb(167 29 42 / 0.6);
+}
+
+/* Table container */
+.table-container {
+    overflow-x: auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 0.05);
+    padding: 15px;
+}
+
+/* Table */
+.logement-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    font-size: 0.95rem;
+}
+
+/* Header */
+.logement-table thead tr th {
+    background-color: #acb3bb;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 700;
+
+    user-select: none;
+}
+
+/* Cells */
+.logement-table tbody tr {
+    background-color: #fefefe;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.logement-table tbody tr:hover {
+    background-color: #e8f0fe;
+}
+
+.logement-table tbody tr td {
+    padding: 12px 15px;
+    vertical-align: middle;
+    border-bottom: none;
+}
+
+/* Accessibility focus */
+.logement-table tbody tr:focus-within,
+.logement-table tbody tr:focus {
+    outline: 2px solid #007bff;
+    background-color: #d0e7ff;
+}
+
+/* Modal (garde ta version) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.modal-content label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.modal-content input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: black;
+}
+
+.modal-actions {
+    margin-top: 25px;
+    text-align: right;
+}
+
+
+.search-bar {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    label {
+        font-weight: bold;
+    }
+
+    input {
+        padding: 4px;
+        width: 160px;
+    }
+
+    .btn-search,
+    .btn-clear {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+}

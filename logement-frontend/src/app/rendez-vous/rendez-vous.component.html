@@ -1,0 +1,79 @@
+<h2 class="title">Liste des Rendez-vous</h2>
+
+<div class="search-bar">
+    <label for="searchRef">Recherche par Réf Logement :</label>
+    <input type="number" id="searchRef" [(ngModel)]="referenceRecherche" name="referenceRecherche" />
+    <button class="btn btn-search" (click)="rechercherParReference()">Rechercher</button>
+    <button class="btn btn-clear" (click)="referenceRecherche = null; loadRendezVous()">Réinitialiser</button>
+</div>
+
+
+<div class="table-header">
+    <button class="btn btn-add" (click)="startAdd()">Ajouter un rendez-vous</button>
+</div>
+
+<div class="table-container" *ngIf="rendezVousList.length > 0; else noData">
+    <table class="logement-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>Réf Logement</th>
+                <th>Numéro Tel</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let rdv of rendezVousList" tabindex="0">
+                <td>{{ rdv.id }}</td>
+                <td>{{ rdv.date }}</td>
+                <td>{{ rdv.heure }}</td>
+                <td>{{ rdv.logement?.reference }}</td>
+                <td>{{ rdv.numTel }}</td>
+                <td>
+                    <button class="btn btn-edit" (click)="editRendezVous(rdv)">Edit</button>
+                    <button class="btn btn-delete" (click)="deleteRendezVous(rdv.id)">Supprimer</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #noData>
+    <p>Aucun rendez-vous disponible.</p>
+</ng-template>
+
+<!-- Modal pour édition ou ajout -->
+<div class="modal" [class.show]="selectedRendezVous" *ngIf="selectedRendezVous">
+    <div class="modal-content">
+        <span class="close" (click)="cancelEdit()">&times;</span>
+        <h3 *ngIf="selectedRendezVous.id">Modifier Rendez-vous ID: {{ selectedRendezVous.id }}</h3>
+        <h3 *ngIf="!selectedRendezVous.id">Ajouter un nouveau Rendez-vous</h3>
+
+        <form (ngSubmit)="saveRendezVous()" #rdvForm="ngForm" novalidate>
+            <label for="date">Date:</label>
+            <input id="date" type="date" [(ngModel)]="selectedRendezVous.date" name="date" required />
+
+            <label for="heure">Heure:</label>
+            <input id="heure" type="time" [(ngModel)]="selectedRendezVous.heure" name="heure" required />
+
+            <label for="reference">Réf Logement :</label>
+            <select id="reference" [(ngModel)]="selectedRendezVous.logement.reference" name="reference" required>
+                <option [ngValue]="null">-- Sélectionner un logement --</option>
+                <option *ngFor="let logement of logements" [ngValue]="logement.reference">
+                    {{ logement.reference }} - {{ logement.adresse }}
+                </option>
+            </select>
+
+
+            <label for="numTel">Numéro Tel:</label>
+            <input id="numTel" type="text" [(ngModel)]="selectedRendezVous.numTel" name="numTel" required />
+
+            <div class="modal-actions">
+                <button type="submit" [disabled]="rdvForm.invalid" class="btn btn-edit">Enregistrer</button>
+                <button type="button" class="btn btn-delete" (click)="cancelEdit()">Annuler</button>
+            </div>
+        </form>
+    </div>
+</div>
